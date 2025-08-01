@@ -17,6 +17,7 @@ mongoose.connect("mongodb://mongo_db:27017/",{'dbName':'dealershipsDB'});
 const Reviews = require('./review');
 
 const Dealerships = require('./dealership');
+const Dealership = require('./dealership');
 
 try {
   Reviews.deleteMany({}).then(()=>{
@@ -57,19 +58,50 @@ app.get('/fetchReviews/dealer/:id', async (req, res) => {
 });
 
 // Express route to fetch all dealerships
+// app.get('/fetchDealers', async (req, res) => {
+// //Write your code here
+// });
 app.get('/fetchDealers', async (req, res) => {
-//Write your code here
-});
+    try {
+      const dealers = await Dealership.find({});
+      res.json(dealers);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
 
-// Express route to fetch Dealers by a particular state
+// // Express route to fetch Dealers by a particular state
+// app.get('/fetchDealers/:state', async (req, res) => {
+// //Write your code here
+// });
 app.get('/fetchDealers/:state', async (req, res) => {
-//Write your code here
-});
+    const state = req.params.state;
+    try {
+      const dealers = await Dealership.find({ state: state });
+      res.json(dealers);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
 
 // Express route to fetch dealer by a particular id
+// app.get('/fetchDealer/:id', async (req, res) => {
+// //Write your code here
+// });
 app.get('/fetchDealer/:id', async (req, res) => {
-//Write your code here
-});
+    const dealerId = req.params.id;
+    try {
+      // Assuming 'id' is stored as a Number in your schema
+      const dealer = await Dealership.findOne({ id: Number(dealerId) });
+      if (dealer) {
+        res.json(dealer);
+      } else {
+        res.status(404).send(`Dealer with id ${dealerId} not found`);
+      }
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
 
 //Express route to insert review
 app.post('/insert_review', express.raw({ type: '*/*' }), async (req, res) => {
