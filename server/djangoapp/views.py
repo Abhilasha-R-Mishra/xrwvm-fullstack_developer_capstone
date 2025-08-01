@@ -22,7 +22,10 @@ from .restapis import get_request, analyze_review_sentiments, post_review
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
+# from django.shortcuts import render
 
+# def login_view(request):
+#     return render(request, 'index.html')
 # Create your views here.
 
 # Create a `login_request` view to handle sign in request
