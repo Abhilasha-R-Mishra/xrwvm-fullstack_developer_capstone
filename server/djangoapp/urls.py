@@ -29,6 +29,17 @@ urlpatterns = [
     path(route='add_review', view=views.add_review, name='add_review'),
     path(route='get_cars', view=views.get_cars, name ='getcars'),
 
+    # path('manifest.json', serve, {
+    #     'path': 'manifest.json',
+    #     'document_root': os.path.join(BASE_DIR, 'frontend', 'build'),
+    # }),
+    # path('favicon.ico', serve, {
+    #     'path': 'favicon.ico',
+    #     'document_root': os.path.join(BASE_DIR, 'frontend', 'build'),
+    # }),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += [
     path('manifest.json', serve, {
         'path': 'manifest.json',
         'document_root': os.path.join(BASE_DIR, 'frontend', 'build'),
@@ -37,5 +48,4 @@ urlpatterns = [
         'path': 'favicon.ico',
         'document_root': os.path.join(BASE_DIR, 'frontend', 'build'),
     }),
-
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]

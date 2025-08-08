@@ -18,6 +18,11 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views.static import serve
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,5 +36,16 @@ urlpatterns = [
     path('dealers/', TemplateView.as_view(template_name="index.html")),
     path('dealer/<int:dealer_id>',TemplateView.as_view(template_name="index.html")),
     path('postreview/<int:dealer_id>',TemplateView.as_view(template_name="index.html")),
-
+ 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+urlpatterns += [
+    path('manifest.json', serve, {
+        'path': 'manifest.json',
+        'document_root': os.path.join(BASE_DIR, 'frontend', 'build'),
+    }),
+    path('favicon.ico', serve, {
+        'path': 'favicon.ico',
+        'document_root': os.path.join(BASE_DIR, 'frontend', 'build'),
+    }),
+]

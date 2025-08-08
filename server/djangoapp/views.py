@@ -125,11 +125,23 @@ def get_dealer_reviews(request, dealer_id):
         for review_detail in reviews:
             response = analyze_review_sentiments(review_detail['review'])
             print(response)
-            review_detail['sentiment'] = response['sentiment']
+            # response = call_sentiment_analyzer(review_text)  # however you call it
+
+            # review_detail['sentiment'] = response['sentiment']
+            if response is not None and 'sentiment' in response:
+                review_detail['sentiment'] = response['sentiment']
+            else:
+                review_detail['sentiment'] = 'neutral' 
         return JsonResponse({"status":200,"reviews":reviews})
     else:
         return JsonResponse({"status":400,"message":"Bad Request"})
 # ...
+# response = call_sentiment_analyzer(review_text)  # however you call it
+
+# if response is not None and 'sentiment' in response:
+#     review_detail['sentiment'] = response['sentiment']
+# else:
+#     review_detail['sentiment'] = 'neutral'  # or some default value
 
 # Create a `get_dealer_details` view to render the dealer details
 # def get_dealer_details(request, dealer_id):
@@ -144,6 +156,7 @@ def get_dealer_details(request, dealer_id):
 
 # Create a `add_review` view to submit a review
 # def add_review(request):
+@csrf_exempt
 def add_review(request):
     if(request.user.is_anonymous == False):
         data = json.loads(request.body)
