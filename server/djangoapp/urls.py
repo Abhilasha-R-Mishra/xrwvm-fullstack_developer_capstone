@@ -29,6 +29,8 @@ urlpatterns = [
     path(route='add_review', view=views.add_review, name='add_review'),
     path(route='get_cars', view=views.get_cars, name ='getcars'),
 
+    path(route='get_inventory/<int:dealer_id>', view=views.get_inventory, name='get_inventory'),
+
     # path('manifest.json', serve, {
     #     'path': 'manifest.json',
     #     'document_root': os.path.join(BASE_DIR, 'frontend', 'build'),
