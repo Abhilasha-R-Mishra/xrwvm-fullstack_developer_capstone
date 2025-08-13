@@ -31,14 +31,14 @@ urlpatterns = [
 
     path(route='get_inventory/<int:dealer_id>', view=views.get_inventory, name='get_inventory'),
 
-    # path('manifest.json', serve, {
-    #     'path': 'manifest.json',
-    #     'document_root': os.path.join(BASE_DIR, 'frontend', 'build'),
-    # }),
-    # path('favicon.ico', serve, {
-    #     'path': 'favicon.ico',
-    #     'document_root': os.path.join(BASE_DIR, 'frontend', 'build'),
-    # }),
+    path('manifest.json', serve, {
+        'path': 'manifest.json',
+        'document_root': os.path.join(BASE_DIR, 'frontend', 'build'),
+    }),
+    path('favicon.ico', serve, {
+        'path': 'favicon.ico',
+        'document_root': os.path.join(BASE_DIR, 'frontend', 'build'),
+    }),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += [
